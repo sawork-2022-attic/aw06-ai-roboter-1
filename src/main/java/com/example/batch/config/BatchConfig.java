@@ -34,7 +34,7 @@ public class BatchConfig {
 
     @Bean
     public ItemReader<JsonNode> itemReader() {
-        return new JsonFileReader("/home/java/meta_Clothing_Shoes_and_Jewelry.json");
+        return new JsonFileReader("D:\\nju-box\\王新宇 MF21\\我的资料库\\私人资料库\\code\\IdeaProject\\aw06-ai-roboter-1\\src\\main\\resources\\data\\meta_Video_Games.json");
     }
 
     @Bean
@@ -60,7 +60,7 @@ public class BatchConfig {
     @Bean
     public Job chunksJob() {
         return jobBuilderFactory
-                .get("chunksJob")
+                .get("meta_Video_Games.json")
                 .start(processProducts(itemReader(), itemProcessor(), itemWriter()))
                 .build();
     }
@@ -68,8 +68,8 @@ public class BatchConfig {
     @Bean
     public TaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(4);
-        executor.setMaxPoolSize(8);
+        executor.setCorePoolSize(10);
+        executor.setMaxPoolSize(20);
         executor.setQueueCapacity(20);
         return executor;
     }

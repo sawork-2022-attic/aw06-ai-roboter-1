@@ -18,4 +18,7 @@ public class Product {
     private List<String> category;
 
     private List<String> imageURLHighRes;
+
+    private String price;
+
 }

@@ -1,5 +1,6 @@
 package com.example.batch.service;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.batch.core.ExitStatus;
@@ -51,8 +52,14 @@ public class JsonFileReader implements StepExecutionListener, ItemReader<JsonNod
 
         String line = reader.readLine();
 
-        if (line != null)
-            return objectMapper.readTree(reader.readLine());
+        if (line != null) {
+            try {
+                return objectMapper.readTree(line.replaceAll("<.*?>", ""));
+            } catch (JsonParseException e) {
+                System.out.println(line.substring(0, Math.min(50, line.length())) + "..., JsonParseException");
+                return null;
+            }
+        }
         else
             return null;
     }
